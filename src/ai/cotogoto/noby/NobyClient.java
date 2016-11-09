@@ -3,11 +3,19 @@ package ai.cotogoto.noby;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.security.SecureRandom;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.List;
 import java.util.Map;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.X509TrustManager;
 
 import org.apache.commons.io.IOUtils;
 
@@ -119,14 +127,14 @@ public class NobyClient {
             // GAE/Jの場合はHttpsURLConnectionが利用できないので、HttpURLConnectionに変更して使ってください。
             // http://www.cotogoto.aiでも接続はできます。
             final URL url = new URL("https://www.cotogoto.ai/webapi/noby.json?" + parameters.toString());
-            final HttpURLConnection secureConn = (HttpURLConnection) url.openConnection();
+            final HttpsURLConnection secureConn = (HttpsURLConnection) url.openConnection();
 
-            // final SSLContext sslContext = SSLContext.getInstance("SSL");
-            // sslContext.init(null,
-            // new X509TrustManager[] { new LooseTrustManager() },
-            // new SecureRandom());
-            // secureConn.setSSLSocketFactory(sslContext.getSocketFactory());
-            // secureConn.setHostnameVerifier(new LooseHostnameVerifier());
+            final SSLContext sslContext = SSLContext.getInstance("SSL");
+            sslContext.init(null,
+                    new X509TrustManager[] { new LooseTrustManager() },
+                    new SecureRandom());
+            secureConn.setSSLSocketFactory(sslContext.getSocketFactory());
+            secureConn.setHostnameVerifier(new LooseHostnameVerifier());
 
             is = secureConn.getInputStream();
             r = new InputStreamReader(is, "UTF-8");
@@ -159,39 +167,39 @@ public class NobyClient {
         return result;
     }
 
-    // /**
-    // * Created by hidekazu.aoshima on 04/23/16.
-    // */
-    // public class LooseTrustManager implements X509TrustManager {
-    //
-    // @Override
-    // public void checkClientTrusted(final X509Certificate[] chain, final String authType) throws CertificateException {
-    //
-    // }
-    //
-    //
-    // @Override
-    // public void checkServerTrusted(final X509Certificate[] chain, final String authType) throws CertificateException {
-    //
-    // }
-    //
-    //
-    // @Override
-    // public X509Certificate[] getAcceptedIssuers() {
-    //
-    // return null;
-    // }
-    // }
-    //
-    // /**
-    // * Created by hidekazu.aoshima on 04/23/16.
-    // */
-    // public class LooseHostnameVerifier implements HostnameVerifier {
-    //
-    // @Override
-    // public boolean verify(final String hostname, final SSLSession session) {
-    //
-    // return true;
-    // }
-    // }
+    /**
+    * Created by hidekazu.aoshima on 04/23/16.
+    */
+    public class LooseTrustManager implements X509TrustManager {
+
+        @Override
+        public void checkClientTrusted(final X509Certificate[] chain, final String authType) throws CertificateException {
+
+        }
+
+
+        @Override
+        public void checkServerTrusted(final X509Certificate[] chain, final String authType) throws CertificateException {
+
+        }
+
+
+        @Override
+        public X509Certificate[] getAcceptedIssuers() {
+
+            return null;
+        }
+    }
+
+    /**
+    * Created by hidekazu.aoshima on 04/23/16.
+    */
+    public class LooseHostnameVerifier implements HostnameVerifier {
+
+        @Override
+        public boolean verify(final String hostname, final SSLSession session) {
+
+            return true;
+        }
+    }
 }
