@@ -48,6 +48,9 @@ public class NobyClient {
     /** persona. */
     private final Integer persona;
 
+    /** ending. */
+    private final String  ending;
+
 
     /**
      * constructor.
@@ -68,7 +71,8 @@ public class NobyClient {
             final Double pLat,
             final Double pLng,
             final Integer pStudy,
-            final Integer pPersona) {
+            final Integer pPersona,
+            final String pEnding) {
 
         this.appKey = pAppKey;
         this.mail = pMail;
@@ -77,6 +81,7 @@ public class NobyClient {
         this.lng = pLng;
         this.study = pStudy;
         this.persona = pPersona;
+        this.ending = pEnding;
     }
 
 
@@ -122,6 +127,9 @@ public class NobyClient {
             }
             if (this.persona != null) {
                 parameters.addParameter("persona", this.persona.toString());
+            }
+            if (this.ending != null) {
+                parameters.addParameter("ending", this.ending.toString());
             }
 
             // GAE/Jの場合はHttpsURLConnectionが利用できないので、HttpURLConnectionに変更して使ってください。
