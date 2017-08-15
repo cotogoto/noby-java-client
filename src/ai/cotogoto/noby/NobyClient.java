@@ -1,16 +1,9 @@
 package ai.cotogoto.noby;
 
-import java.io.InputStream;
-import java.io.Reader;
 import java.net.URLEncoder;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
 import java.util.List;
 import java.util.Map;
 
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.X509TrustManager;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
@@ -23,42 +16,6 @@ import net.arnx.jsonic.JSON;
  * Created by hidekazu.aoshima on 04/23/16.
  */
 public class NobyClient {
-
-    /**
-     * Created by hidekazu.aoshima on 04/23/16.
-     */
-    public class LooseHostnameVerifier implements HostnameVerifier {
-
-        @Override
-        public boolean verify(final String hostname, final SSLSession session) {
-
-            return true;
-        }
-    }
-
-    /**
-     * Created by hidekazu.aoshima on 04/23/16.
-     */
-    public class LooseTrustManager implements X509TrustManager {
-
-        @Override
-        public void checkClientTrusted(final X509Certificate[] chain, final String authType) throws CertificateException {
-
-        }
-
-
-        @Override
-        public void checkServerTrusted(final X509Certificate[] chain, final String authType) throws CertificateException {
-
-        }
-
-
-        @Override
-        public X509Certificate[] getAcceptedIssuers() {
-
-            return null;
-        }
-    }
 
     /** appKey. */
     private final String  appKey;
@@ -126,8 +83,7 @@ public class NobyClient {
 
         Result result = null;
 
-        final InputStream is = null;
-        final Reader r = null;
+
 
         try {
             final Parameters parameters = new Parameters();
@@ -169,7 +125,7 @@ public class NobyClient {
                     .get();
 
 
-            final String json= response.readEntity(String.class);
+            final String json = response.readEntity(String.class);
 
             if (json.indexOf("errors") > -1) {
                 @SuppressWarnings ("rawtypes")
@@ -190,13 +146,6 @@ public class NobyClient {
 
         } catch (final Exception e) {
             throw e;
-        } finally {
-            if (r != null) {
-                r.close();
-            }
-            if (is != null) {
-                is.close();
-            }
         }
         return result;
     }
