@@ -120,7 +120,7 @@ public class NobyClient {
             }
 
             final Client client = ClientBuilder.newClient();
-            final Response response = client.target("https://www.cotogoto.ai/webapi/noby.json?" + parameters.toString())
+            final Response response = client.target("https://app.cotogoto.ai/webapi/noby.json?" + parameters.toString())
                     .request(MediaType.TEXT_PLAIN_TYPE)
                     .get();
 
