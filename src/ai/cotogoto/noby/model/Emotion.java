@@ -3,22 +3,26 @@ package ai.cotogoto.noby.model;
 import lombok.Data;
 
 /**
- * ネガポジData.
+ * 感情解析Data.
  *
  * @author H.Aoshima
  * @version 1.0
  */
 @Data
-public class Negaposi {
+public class Emotion {
 
     /**
      * 単語.
      */
     private String word;
 
-    /**
-     * 判定.
-     */
-    private float  score;
+    /** */
+    private double likeDislike;
+
+    /** */
+    private double joySad;
+
+    /** */
+    private double angerFear;
 
 }
