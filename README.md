@@ -1,14 +1,9 @@
-# noby-java-client
-
-Noby Java client (for the [Noby API](https://webapi.cotogoto.ai/))
-======================================================================================================================================================
+# Noby Java client (for the [Noby API](https://webapi.cotogoto.ai/))
 NOBY API is an artificial intelligence API used within CotoGoto.
 By using the NOBY API, various operations can be performed on CotoGoto through conversation.
 CotoGoto also works with services such as Facebook, Twitter, Google Calendar, and Bocco, so it can be linked through the NOBY API.
 
-
-Building
-------------------------------------------------------------------------------------------------------------------------------------------------------
+# Building
 
 ### Maven
 Run `mvn package` from the base directory. Package is built into the `target` directory.
