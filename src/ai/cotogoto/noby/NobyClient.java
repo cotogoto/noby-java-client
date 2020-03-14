@@ -41,6 +41,7 @@ public class NobyClient {
     /** ending. */
     private final String  ending;
 
+
     /**
      * constructor.
      * @param pAppKey Set the Consumer Key(App Key) that was issued at the time of registration.(Required)
@@ -73,6 +74,7 @@ public class NobyClient {
         this.ending = pEnding;
     }
 
+
     /**
      * exec.
      * @param message Set the text of the conversation.
@@ -82,8 +84,6 @@ public class NobyClient {
     public Result exec(final String message) throws Exception {
 
         Result result = null;
-
-
 
         try {
             final Parameters parameters = new Parameters();
@@ -121,23 +121,19 @@ public class NobyClient {
 
             final Client client = ClientBuilder.newClient();
             final Response response = client.target("https://app.cotogoto.ai/webapi/noby.json?" + parameters.toString())
-                    .request(MediaType.TEXT_PLAIN_TYPE)
+                    .request(MediaType.APPLICATION_JSON)
                     .get();
-
 
             final String json = response.readEntity(String.class);
 
             if (json.indexOf("errors") > -1) {
                 @SuppressWarnings ("rawtypes")
-                final
-                Map errors = JSON.decode(json);
+                final Map errors = JSON.decode(json);
                 @SuppressWarnings ("rawtypes")
-                final
-                List list = (List) errors.get("errors");
+                final List list = (List) errors.get("errors");
                 for (final Object obj : list) {
                     @SuppressWarnings ("rawtypes")
-                    final
-                    Map error = (Map) obj;
+                    final Map error = (Map) obj;
                     throw new Exception((String) error.get("message"));
                 }
             } else {
