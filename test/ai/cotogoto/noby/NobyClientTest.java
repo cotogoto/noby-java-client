@@ -7,7 +7,7 @@ public class NobyClientTest {
 
     public static void main(final String[] args) throws Exception {
 
-        final String appKey = "1417776140576737000KFI";
+        final String appKey = "<APP_KEY>";
         final Setting setting = new Setting();
         setting.setMail(null);
         setting.setPass(null);
