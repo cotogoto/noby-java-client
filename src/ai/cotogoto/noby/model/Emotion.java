@@ -11,9 +11,7 @@ import lombok.Data;
 @Data
 public class Emotion {
 
-    /**
-     * 単語.
-     */
+    /** 単語. */
     private String word;
 
     /** */

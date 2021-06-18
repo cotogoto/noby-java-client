@@ -41,22 +41,24 @@ Noby Java client は NOBY API に簡単にアクセスするためのJavaクラ�
 
 それぞれのパラメータを設定します。
 
-    final String appKey = "APP_KEY";
-    final String mail = null;
-    final String pass = null;
-    final Double lat = null;
-    final Double lng = null;
-    final Integer study = null;
-    final Integer persona = null;
-    final String ending = null;
+    String appKey = "APP_KEY";
+    Setting setting = new Setting();
+    setting.setMail(null);
+    setting.setPass(null);
+    setting.setToken(null);
+    setting.setLat(null);
+    setting.setLng(null);
+    setting.setStudy(null);
+    setting.setPersona(null);
+    setting.setEnding(appKey);
 
 続いて NobyClient を生成します。
 
-    final NobyClient client　= new NobyClient(appKey,mail,pass,lat,lng,study,persona,ending);
+    NobyClient client = new NobyClient(appKey, setting);
 
 会話内容を設定して、実行すると会話の結果が取得できます。
 
-    final Result result = client.exec("こんにちは");
+    Result result = client.exec("こんにちは");
 
 # License
 The source code is licensed MIT. The website content is licensed CC BY 4.0,see LICENSE.

@@ -10,6 +10,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import ai.cotogoto.noby.model.Result;
+import ai.cotogoto.noby.model.Setting;
 import net.arnx.jsonic.JSON;
 
 /**
@@ -18,60 +19,50 @@ import net.arnx.jsonic.JSON;
 public class NobyClient {
 
     /** appKey. */
-    private final String  appKey;
+    private final String appKey;
 
     /** mail. */
-    private final String  mail;
+    private String       mail;
 
     /** pass. */
-    private final String  pass;
+    private String       pass;
+
+    /** token. */
+    private String       token;
 
     /** lat. */
-    private final Double  lat;
+    private Double       lat;
 
     /** lng. */
-    private final Double  lng;
+    private Double       lng;
 
     /** study. */
-    private final Integer study;
+    private Integer      study;
 
     /** persona. */
-    private final Integer persona;
+    private Integer      persona;
 
     /** ending. */
-    private final String  ending;
-
+    private String       ending;
 
     /**
      * constructor.
      * @param pAppKey Set the Consumer Key(App Key) that was issued at the time of registration.(Required)
-     * @param pMail Set the e-mail address at the time of login of Cotogoto.(Any)
-     * @param pPass Set the password at the time of login of Cotogoto.(Any)
-     * @param pLat latitude. To use the check-in function of Cotogoto.(Any)
-     * @param pLng longitude. To use the check-in function of Cotogoto.(Any)
-     * @param pStudy Select the presence or absence of learning at the time of the conversation.(Any)
-     *              "0: No", "1: Yes"
-     * @param pPersona Select the personality of artificial intelligence.(Any)
-     *                "0: Normal", "1: Tsundere (woman)", "2: Tsundere (man)."
+     * @param setting Set the setting data.(Any)
      */
-    public NobyClient(
-            final String pAppKey,
-            final String pMail,
-            final String pPass,
-            final Double pLat,
-            final Double pLng,
-            final Integer pStudy,
-            final Integer pPersona,
-            final String pEnding) {
+    public NobyClient(String pAppKey, Setting setting) {
 
         this.appKey = pAppKey;
-        this.mail = pMail;
-        this.pass = pPass;
-        this.lat = pLat;
-        this.lng = pLng;
-        this.study = pStudy;
-        this.persona = pPersona;
-        this.ending = pEnding;
+        if (setting != null) {
+            this.mail = setting.getMail();
+            this.pass = setting.getPass();
+            this.token = setting.getToken();
+            this.lat = setting.getLat();
+            this.lng = setting.getLng();
+            this.study = setting.getStudy();
+            this.persona = setting.getPersona();
+            this.ending = setting.getEnding();
+        }
     }
 
 
@@ -96,6 +87,9 @@ public class NobyClient {
             }
             if (this.pass != null) {
                 parameters.addParameter("pass", this.pass);
+            }
+            if (this.token != null) {
+                parameters.addParameter("token", this.token);
             }
             if (message == null) {
                 throw new NullPointerException("parameter is required.");
