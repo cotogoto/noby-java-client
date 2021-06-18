@@ -1,10 +1,21 @@
 # Noby Java client とは
 
-Noby Java client は NOBY API (https://webapi.cotogoto.ai/) に簡単にアクセスするためのJavaクライアントライブラリです。
+Noby Java client は NOBY API に簡単にアクセスするためのJavaクライアントライブラリです。
+
+<img src="https://raw.githubusercontent.com/cotogoto/noby-java-client/master/noby_image/noby_neutral_a.jpg" width='200'>
+
+* CotoGoto
+    * https://www.cotogoto.ai/
+
+* Noby API
+    * https://webapi.cotogoto.ai/
+
+## Updates
+* 2021/06/18 0.5.0 released
 
 ## インストール
 
-Eclipseから
+■Eclipseから
 
 * GitHubからソースコードをチェックアウトします。
 * 「ファイルメニュー > インポート」から「既存 Maven プロジェクト」でソースコードをインポートします。
