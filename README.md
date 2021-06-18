@@ -39,7 +39,8 @@ Noby Java client は NOBY API に簡単にアクセスするためのJavaクラ�
 * NobyClient オブジェクトを生成
 * 会話を設定して実行
 
-    // それぞれのパラメータを設定します。
+それぞれのパラメータを設定します。
+
     final String appKey = "APP_KEY";
     final String mail = null;
     final String pass = null;
@@ -49,10 +50,12 @@ Noby Java client は NOBY API に簡単にアクセスするためのJavaクラ�
     final Integer persona = null;
     final String ending = null;
 
-    // 続いて NobyClient を生成します。
+続いて NobyClient を生成します。
+
     final NobyClient client　= new NobyClient(appKey,mail,pass,lat,lng,study,persona,ending);
 
-    // 会話内容を設定して、実行すると会話の結果が取得できます。
+会話内容を設定して、実行すると会話の結果が取得できます。
+
     final Result result = client.exec("こんにちは");
 
 # License
