@@ -16,7 +16,7 @@ public class NobyClientTest {
         setting.setLng(null);
         setting.setStudy(null);
         setting.setPersona(null);
-        setting.setEnding(appKey);
+        setting.setEnding(null);
 
         final NobyClient client = new NobyClient(appKey, setting);
         final Result result = client.exec("こんにちは");
