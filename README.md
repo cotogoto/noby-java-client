@@ -11,6 +11,7 @@ Noby Java client は NOBY API に簡単にアクセスするためのJavaクラ�
     * https://webapi.cotogoto.ai/
 
 ## Updates
+* 2021/06/18 0.6.0 最新化
 * 2021/06/18 0.5.1 APIトークンの項目追加
 * 2021/06/18 0.5.0 released
 
@@ -29,7 +30,7 @@ Noby Java client は NOBY API に簡単にアクセスするためのJavaクラ�
     <dependency>
         <groupId>noby-java-client</groupId>
         <artifactId>noby-java-client</artifactId>
-        <version>0.5.0-SNAPSHOT</version>
+        <version>0.6.0</version>
     </dependency>
 
 ## 使い方
