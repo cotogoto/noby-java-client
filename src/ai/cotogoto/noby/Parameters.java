@@ -1,133 +1,98 @@
 package ai.cotogoto.noby;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
+
+import lombok.Data;
 
 /**
- * Created by hidekazu.aoshima on 04/23/16.
+ * The Parameters class is used to maintain a list of parameters and
+ * convert them into a URL query string format.
+ *
+ * @author H.Aoshima
+ * @version 1.0
  */
+@Data
 public class Parameters implements Serializable {
 
-    /** serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
-    /** parameters. */
-    private List <Parameter>  parameters       = new ArrayList <Parameter>();
-
+    private List <Parameter>  parameters       = new CopyOnWriteArrayList <>();
 
     /**
-     * @param name String
-     * @param value String
+     * The Parameter inner class is used to encapsulate a single parameter which
+     * includes its name and corresponding value.
      */
-    public final void addParameter(final String name, final String value) {
+    @Data
+    class Parameter implements Serializable {
 
-        this.parameters.add(new Parameter(name, value));
+        private static final long serialVersionUID = 1L;
+
+        private final String      name;
+
+        private final String      value;
+
+        /**
+         * Constructs a new Parameter with the specified name and value.
+         *
+         * @param name The name of the parameter.
+         * @param value The value of the parameter.
+         */
+        Parameter(final String name, final String value) {
+
+            this.name = name;
+            this.value = value;
+        }
+    }
+
+    /**
+     * Adds a new Parameter to the list of parameters. The value is
+     * converted to a string before being stored.
+     *
+     * @param name The name of the parameter.
+     * @param value The value of the parameter.
+     */
+    public final void addParameter(final String name, final Object value) {
+
+        this.parameters.add(new Parameter(name, String.valueOf(value)));
     }
 
 
     /**
-     * @return parameterList
+     * Returns a copy of the current list of parameters.
+     *
+     * @return The current list of parameters.
      */
     public final List <Parameter> getParameters() {
 
-        return this.parameters;
+        return new CopyOnWriteArrayList <>(this.parameters);
     }
 
 
     /**
-     * @param pParameters Set parameters
+     * Replaces the current list of parameters with the specified list.
+     *
+     * @param parameters The new list of parameters.
      */
-    public final void setParameters(final List <Parameter> pParameters) {
+    public final void setParameters(final List <Parameter> parameters) {
 
-        this.parameters = pParameters;
+        this.parameters = new CopyOnWriteArrayList <>(parameters);
     }
+
 
     /**
-    * Created by hidekazu.aoshima on 04/23/16.
-    */
-    class Parameter implements Serializable {
-
-        /**
-         * serialVersionUID.
-         */
-        private static final long serialVersionUID = 1L;
-
-        /** name. */
-        private String            name;
-
-        /** value. */
-        private String            value;
-
-
-        /**
-         * constructor.
-         * @param pName String
-         * @param pValue String
-         */
-        public Parameter(final String pName, final String pValue) {
-
-            this.name = pName;
-            this.value = pValue;
-        }
-
-
-        /**
-         * @return name
-         */
-        public String getName() {
-
-            return this.name;
-        }
-
-
-        /**
-         * @param pName Set name
-         */
-        public void setName(final String pName) {
-
-            this.name = pName;
-        }
-
-
-        /**
-         * @return value
-         */
-        public String getValue() {
-
-            return this.value;
-        }
-
-
-        /**
-         * @param pValue Set value
-         */
-        public void setValue(final String pValue) {
-
-            this.value = pValue;
-        }
-
-    }
-
-
-    /*
-     * (非 Javadoc)
-     * @see java.lang.Object#toString()
+     * Returns a string representation of the parameters in the form of a
+     * URL query string.
+     *
+     * @return A string representation of the parameters.
      */
     @Override
     public final String toString() {
 
-        final StringBuffer sb = new StringBuffer();
-
-        boolean first = true;
-        for (final Parameter param : this.parameters) {
-            if (first) {
-                sb.append(param.getName() + "=" + param.getValue());
-                first = false;
-            } else {
-                sb.append("&" + param.getName() + "=" + param.getValue());
-            }
-        }
-        return sb.toString();
+        return this.parameters.stream()
+                .map(param -> param.getName() + "=" + param.getValue())
+                .collect(Collectors.joining("&"));
     }
 }

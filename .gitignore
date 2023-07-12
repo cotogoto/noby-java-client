@@ -1,3 +1,6 @@
 .settings/org.eclipse.m2e.core.prefs
 .settings/
 target/
+.factorypath
+bin/
+.classpath
