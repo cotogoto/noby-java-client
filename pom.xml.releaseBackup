@@ -14,7 +14,7 @@
     <scm>
         <url>https://github.com/cotogoto/noby-java-client</url>
         <connection>scm:git:git@github.com:cotogoto/noby-java-client.git</connection>
-        <tag>HEAD</tag>
+        <tag>v0.7.1</tag>
     </scm>
 
     <build>
