@@ -19,22 +19,24 @@ Noby Java clientは、NOBY APIへのアクセスを簡単にするためのJava�
     
 ## インストール方法 (Installation)
 
-ライブラリのインストールは以下の手順で行います：
+Latest Version:
+[![](https://jitpack.io/v/cotogoto/noby-java-client.svg)](https://jitpack.io/#cotogoto/noby-java-client)
 
-1. GitHubからソースコードをチェックアウトします。(Check out the source code from GitHub.)
-2. Eclipseの「ファイルメニュー > インポート」から既存のMavenプロジェクトとしてソースコードをインポートします。(Import the source code as an existing Maven project from the 'File Menu > Import' in Eclipse.)
-3. プロジェクトエクスプローラーから「Noby Java client」プロジェクトを選択し、右クリックメニューを表示します。(Select the 'Noby Java client' project from the Project Explorer and display the right-click menu.)
-4. 「実行 > Maven install」を選択してプロジェクトをコンパイルします。(Select 'Run > Maven install' to compile the project.)
-5. プロジェクト内のtargetフォルダにJarファイルが生成されます。(A Jar file will be generated in the target folder within the project.)
+下記の **VERSION** キーを上記の最新バージョンに必ず置き換えてください
 
-また、自分のプロジェクトのpom.xmlファイルに「Noby Java client」のMavenを追加することもできます。(You can also add the Noby Java client Maven to your project's pom.xml file.)
-
-```
-    <dependency>
-        <groupId>noby-java-client</groupId>
-        <artifactId>noby-java-client</artifactId>
-        <version>0.7.0</version>
-    </dependency>
+Maven
+```xml
+<dependency>
+    <groupId>com.github.cotogoto</groupId>
+    <artifactId>noby-java-client</artifactId>
+    <version>VERSION</version>
+</dependency>
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
 ```
 
 ## 使い方 (Usage)
