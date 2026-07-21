@@ -1,26 +1,47 @@
 package ai.cotogoto.noby;
 
-import ai.cotogoto.noby.model.Setting;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
 
 public class NobyClientTest {
 
-    public static void main(final String[] args) throws Exception {
+    @Test
+    public void decodeResponseReturnsResultForHttpOk() throws Exception {
 
-        final var appKey = "<APP_KEY>";
-        final var setting = new Setting();
-        setting.setMail(null);
-        setting.setPass(null);
-        setting.setToken(null);
-        setting.setLat(null);
-        setting.setLng(null);
-        setting.setStudy(null);
-        setting.setPersona(null);
-        setting.setEnding(null);
+        final var result = NobyClient.decodeResponse(200, "{\"text\":\"hello\",\"mood\":0.5}");
 
-        final var client = new NobyClient(appKey, setting);
-        final var result = client.exec("こんにちは");
+        assertEquals("hello", result.getText());
+        assertEquals(0.5, result.getMood(), 0.0);
+    }
 
-        System.out.println(result);
+
+    @Test
+    public void decodeResponsePreservesApiErrorMessage() {
+
+        try {
+            NobyClient.decodeResponse(200, "{\"errors\":[{\"message\":\"invalid request\"}]}");
+        } catch (final Exception e) {
+            assertEquals("invalid request", e.getMessage());
+            return;
+        }
+
+        throw new AssertionError("Expected an API error");
+    }
+
+
+    @Test
+    public void decodeResponseReturnsHttpErrorDetails() throws Exception {
+
+        try {
+            NobyClient.decodeResponse(400, "bad request details");
+        } catch (final NobyHttpException e) {
+            assertEquals(400, e.getStatus());
+            assertEquals("bad request details", e.getResponseBody());
+            return;
+        }
+
+        throw new AssertionError("Expected an HTTP error");
     }
 
 }

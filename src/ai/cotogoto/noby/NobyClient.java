@@ -80,15 +80,43 @@ public class NobyClient {
 
         this.addOptionalParameters(parameters);
 
-        final var response = this.client.target("https://app.cotogoto.ai/webapi/noby.json?" + parameters.toString())
+        try (var response = this.client.target("https://app.cotogoto.ai/webapi/noby.json?" + parameters.toString())
                 .request(MediaType.APPLICATION_JSON)
-                .get();
+                .get()) {
 
-        if (response.getStatus() != Response.Status.OK.getStatusCode()) {
-            throw new Exception("HTTP error: " + response.getStatus());
+            final var status = response.getStatus();
+            final String json;
+
+            try {
+                json = response.hasEntity() ? response.readEntity(String.class) : "";
+            } catch (final RuntimeException e) {
+                if (status != Response.Status.OK.getStatusCode()) {
+                    throw new NobyHttpException(status, "", e);
+                }
+                throw e;
+            }
+
+            result = decodeResponse(status, json);
         }
 
-        final var json = response.readEntity(String.class);
+        return result;
+    }
+
+
+    /**
+     * Decodes a NOBY API response while preserving the existing successful and
+     * API-error behavior.
+     *
+     * @param status HTTP status code
+     * @param json response JSON
+     * @return decoded result
+     * @throws Exception if the HTTP or API response contains an error
+     */
+    static Result decodeResponse(final int status, final String json) throws Exception {
+
+        if (status != Response.Status.OK.getStatusCode()) {
+            throw new NobyHttpException(status, json);
+        }
 
         if (json.contains("errors")) {
 
@@ -98,11 +126,9 @@ public class NobyClient {
                 final var error = (Map <?, ?>) obj;
                 throw new Exception((String) error.get("message"));
             }
-        } else {
-            result = JSON.decode(json, Result.class);
         }
 
-        return result;
+        return JSON.decode(json, Result.class);
     }
 
 
