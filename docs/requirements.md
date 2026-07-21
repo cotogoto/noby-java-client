@@ -37,6 +37,7 @@ JavaアプリケーションからNOBY APIへ会話文と設定値を送信し�
 - `exec(String message)` はNOBY APIへHTTP GETを送る。
 - 必須クエリは `app_key` と `text` である。
 - `text` はUTF-8でURLエンコードする。
+- `ending` は非nullの場合にUTF-8でURLエンコードする。
 - 任意クエリは `mail`、`pass`、`token`、`lat`、`lng`、`study`、`persona`、`ending` である。
 - HTTP 200の場合、JSON内に `errors` がなければ `Result` へデコードする。
 - JSON内に `errors` があれば、先頭から走査した最初のエラーメッセージを例外として送出する。
@@ -95,7 +96,7 @@ JavaアプリケーションからNOBY APIへ会話文と設定値を送信し�
 - 非常に長い会話文（GET URL長制限）
 - `study` と `persona` の定義外整数
 - 緯度・経度の範囲外、`NaN`、無限大
-- `ending` や任意文字列に予約文字を含む場合（`text` 以外はURLエンコードされない）
+- `mail`、`pass`、`token` に予約文字または非ASCII文字を含む場合（これらはURLエンコードされない）
 - HTTP 200だが空、不正、または想定外構造のJSON
 
 ## 10. 今回確認できた既存仕様

@@ -43,7 +43,7 @@ Lombok `@Data` がモデルのgetter/setter、`equals`、`hashCode`、`toString`
 2. `NobyClient` は `Setting` の値を自身のフィールドへコピーする。
 3. `exec(message)` が `appKey` の `null` を検証する。
 4. `Parameters` に `app_key` とURLエンコード済み `text` を追加する。
-5. 非 `null` の任意設定を追加し、クエリ文字列へ連結する。
+5. 非 `null` の任意設定を追加する。`ending` はUTF-8でURLエンコードし、その他は現行形式を維持する。
 6. 固定URLへ `Accept: application/json` のGET要求を送る。
 7. HTTP 200以外ならステータスのみの例外を投げる。
 8. HTTP 200なら本文を文字列で読み、文字列に `errors` が含まれるか判定する。
@@ -77,7 +77,7 @@ Lombok `@Data` がモデルのgetter/setter、`equals`、`hashCode`、`toString`
 
 ## 8. 既存設計上の注意点
 
-- `text` だけを事前エンコードし、他の文字列値はエンコードしない。`Parameters` 自体はURLエンコードを行わない。
+- `text` と `ending` を追加時に個別にUTF-8エンコードする。`Parameters` 自体はURLエンコードを行わず、他の文字列値もエンコードしない。
 - GETクエリに認証情報と本文を含めるため、URLログ・URL長の影響を受ける。
 - `json.contains("errors")` はJSON構造ではなく文字列で分岐する。
 - HTTPエラー本文を読まないため、400等の原因をライブラリ利用側で特定できない。

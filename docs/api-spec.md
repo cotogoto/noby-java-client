@@ -42,7 +42,7 @@
 | `lng` | `Double` | 任意 | `toString()`。範囲検証なし |
 | `study` | `Integer` | 任意 | コメント上 `0`: No、`1`: Yes。値域検証なし |
 | `persona` | `Integer` | 任意 | コメント上 `0`: Normal、`1`: Tsundere (woman)、`2`: Tsundere (man)。値域検証なし |
-| `ending` | `String` | 任意 | 非null時のみ。エンコードなし |
+| `ending` | `String` | 任意 | 非null時のみ。UTF-8で `URLEncoder.encode` |
 
 全パラメータはURLクエリへ連結される。秘密情報を含むためURLの記録は禁止する。
 

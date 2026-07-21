@@ -1,6 +1,7 @@
 package ai.cotogoto.noby;
 
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
@@ -74,11 +75,7 @@ public class NobyClient {
         this.validateParameters();
 
         Result result = null;
-        final var parameters = new Parameters();
-        parameters.addParameter("app_key", this.appKey);
-        parameters.addParameter("text", URLEncoder.encode(message, "UTF-8"));
-
-        this.addOptionalParameters(parameters);
+        final var parameters = this.createParameters(message);
 
         try (var response = this.client.target("https://app.cotogoto.ai/webapi/noby.json?" + parameters.toString())
                 .request(MediaType.APPLICATION_JSON)
@@ -100,6 +97,25 @@ public class NobyClient {
         }
 
         return result;
+    }
+
+
+    /**
+     * Creates the query parameters for a NOBY API request.
+     *
+     * @param message the conversation text
+     * @return request query parameters
+     * @throws Exception if a parameter cannot be encoded
+     */
+    Parameters createParameters(final String message) throws Exception {
+
+        final var parameters = new Parameters();
+        parameters.addParameter("app_key", this.appKey);
+        parameters.addParameter("text", URLEncoder.encode(message, StandardCharsets.UTF_8));
+
+        this.addOptionalParameters(parameters);
+
+        return parameters;
     }
 
 
@@ -150,7 +166,7 @@ public class NobyClient {
      *
      * @param parameters the Parameters object to add the optional parameters to
      */
-    private void addOptionalParameters(final Parameters parameters) {
+    private void addOptionalParameters(final Parameters parameters) throws Exception {
 
         if (this.mail != null) {
             parameters.addParameter("mail", this.mail);
@@ -174,7 +190,7 @@ public class NobyClient {
             parameters.addParameter("persona", this.persona.toString());
         }
         if (this.ending != null) {
-            parameters.addParameter("ending", this.ending.toString());
+            parameters.addParameter("ending", URLEncoder.encode(this.ending, StandardCharsets.UTF_8));
         }
     }
 }
